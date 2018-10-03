@@ -78,8 +78,18 @@ router.route('/bears/:bear_id').get(function(req, res) {
 		if(err){
 		    res.send(err);
 		}
-		res.json({ message: 'Beat Updated!' });
+		res.json({ message: 'Bear Updated!' });
 	    });
+	});
+    })
+    .delete(function(req,res){
+	Bear.remove({
+	    _id: req.params.bear_id
+	}, function(err, bear) {
+	    if(err){
+		res.send(err);
+	    }
+	    res.json({ message: 'Successfully deleted' });
 	});
     });
     
