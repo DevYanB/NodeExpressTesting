@@ -50,8 +50,39 @@ router.route('/bears').post(function(req, res) {
             res.json({ message: 'Bear created!' });
         });
 
+}).get(function(req , res){
+    Bear.find(function(err , bears){
+	if(err){
+	    res.send(err);
+	}
+	res.json(bears);
+	
     });
+});
 
+router.route('/bears/:bear_id').get(function(req, res) {
+    Bear.findById(req.params.bear_id, function(err, bear){
+	if(err){
+	    res.send(err);
+	}
+	res.json(bear);
+    });
+})
+    .put(function(req,res){
+	Bear.findById(req.params.bear_id,function(err, bear){
+	    if(err){
+		res.send(err);
+	    }
+	    bear.name = req.body.name;
+	    bear.save(function(err){
+		if(err){
+		    res.send(err);
+		}
+		res.json({ message: 'Beat Updated!' });
+	    });
+	});
+    });
+    
 // more routes for our API will happen here
 
 // REGISTER OUR ROUTES -------------------------------
